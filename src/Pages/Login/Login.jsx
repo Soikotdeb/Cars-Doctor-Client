@@ -3,6 +3,7 @@ import img from '../../assets/images/login/login.svg'
 import { FaFacebook, FaGithub, FaGoogle, FaLinkedin } from 'react-icons/fa';
 import { useContext } from 'react';
 import { AuthContext } from './../../Providers/AuthProvider';
+import SocialLogin from '../shared/SocialLogin/SocialLogin';
 
 const Login = () => {
     const {signIn}=useContext(AuthContext)
@@ -21,25 +22,10 @@ const handleLogin = event =>{
     signIn(email,password)
     .then(result=>{
         const user = result.user;
-        const loggedUser ={
-          email:user.email
-        }
-        console.log(loggedUser);
+    
+        console.log(user);
       navigate(from,{replace:true})
-      fetch('http://localhost:5000/jwt',{
-        method:'POST',
-        headers:{
-          'content-type' : 'application/json'
-        },
-        body:JSON.stringify(loggedUser)
-         
-      })
-      .then(res=>res.json())
-      .then(data=>{
-        console.log('jwt response',data);
-        // not a proper way its a second demo place store access token just use to beginner
-        localStorage.setItem('accessToken', data.token)
-      })
+
 
 
     })
@@ -78,17 +64,7 @@ const handleLogin = event =>{
               <div className="form-control mt-6">
                 <input  className="btn text-white font-bold bg-orange-600" type="submit" value="Login"  />
               </div>
-              <p className='text-center mt-3 font-bold'>Or LogIn With</p>
-              <div className='flex text-center justify-between mt-4'>
-
-                <Link> <FaFacebook></FaFacebook> </Link>
-                <Link> <FaGithub></FaGithub> </Link>
-                <Link> <FaLinkedin></FaLinkedin> </Link>
-                <Link> <FaGoogle></FaGoogle> </Link>
-              </div>
-              <div className='mt-3 text-center'>
-                <h3>Have an New User? <Link className='font-bold text-orange-600' to="/signUp">Sign Up</Link> </h3>
-              </div>
+              <SocialLogin></SocialLogin>
          </form>
             </div>
           </div>
